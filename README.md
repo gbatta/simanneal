@@ -22,11 +22,11 @@ The command stucture is as follows:
 
 `nn_a_max`: The number of annealing cycles until reannealing occurs.
 
-`del`: For reannealing, a vector of perturbation sizes for each parameter. 
+`del`: For reannealing, a vector of perturbation sizes for each parameter. A decent way to generate this is to set `del` equal to `abs(ub-lb)*1e-2`
 
 `max_eval`: The maximum number of generated points before the algorithm stops.
 
-`func_tol`: 
+`func_tol`: The number below which the difference between the current minimum cost, and prior minimum costs at `n` reannealing cycles should fall before we declare the algorithm has converged.
 
 `a=(N_cash,c_b,false,actual_moments,raw_weights,moment_number,num_obs,true,true,true,true,true)`
 
