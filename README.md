@@ -1,9 +1,10 @@
 # simanneal
 Simulated annealing for Julia
 
-The function outputs the final, minimum cost, as well as the cost-minimizing parameters.
+The function outputs the minimum cost, as well as the cost-minimizing parameters.
 
 The command stucture is as follows:
+
 `simanneal(obj_fn,obj_fn_args,lb,ub,c,nn_g_max,nn_a_max,del,max_eval,func_tol,func_tol_array_size,noisy,stall_iter_lim_sc=5,rand_init=500990)`
 
 ## Arguments
