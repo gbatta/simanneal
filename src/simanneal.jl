@@ -35,7 +35,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
   tt=0
   if noisy==1
       junk=vcat("vvv","p_accept","nn_eval","nn_g","nn_a","nn_r",fill("wwold",sp),fill("wwnew",sp),fill("wwbest",sp),"cost_old","cost_new","cost_best",fill("s_done",sp),"tee_accept","tee_accept_zero",
-      fill("tee_gen",sp),fill("tee_gen_zero",sp),fill("kay_i",sp),"kay_a",fill("func_tol_array",func_tol_array_size),fill("inner_costs",moment_size))
+      fill("tee_gen",sp),fill("tee_gen_zero",sp),fill("kay_i",sp),"kay_a",fill("func_tol_array",func_tol_array_size))
   end
 
   wwdelta=Array{Float64}(sp)
@@ -65,10 +65,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
 
       nn_g+=1
 
-      # [1] references the value of the cost function; [2] would deliver the Mx1 inner_cost_function array
-      COSTS_new=obj_fn(wwnew,obj_fn_args[2:num_args]...)
-      cost_new=COSTS_new[1]
-      inner_costs=COSTS_new[2]
+      cost_new=obj_fn(wwnew,obj_fn_args[2:num_args]...)[1]
 
       p_accept=1/(1+exp((cost_new-cost_old)/tee_accept))
       srand(650000+nn_g)
@@ -110,7 +107,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
         nn_g=0
       end
       if noisy==1
-          junk=hcat(junk,vcat(vvv,p_accept,nn_eval,nn_g,nn_a,nn_r,wwold,wwnew,wwbest,cost_old,cost_new,cost_best,s_done,tee_accept,tee_accept_zero,tee_gen,tee_gen_zero,kay_i,kay_a,func_tol_array,inner_costs))
+          junk=hcat(junk,vcat(vvv,p_accept,nn_eval,nn_g,nn_a,nn_r,wwold,wwnew,wwbest,cost_old,cost_new,cost_best,s_done,tee_accept,tee_accept_zero,tee_gen,tee_gen_zero,kay_i,kay_a,func_tol_array))
           writecsv("simanneal_output.csv",junk)
       end
     end  # end of reannealing loop
