@@ -8,9 +8,9 @@ The command stucture is as follows:
 
 ## Arguments
 
-`obj_fn`: The name of the program that returns the cost you are trying to minimize.
+`obj_fn`: The name of the function that returns the cost you are trying to minimize (or the first value returned of any tuple you specify as the output, which must be the cost).
 
-`obj_fn_arguments`: Tuple of arguments to the objective function. The first argument must be a vector of initial parameters you are going to test.
+`obj_fn_arguments`: Tuple of arguments to the objective function. The first argument MUST be a vector of initial parameters you are going to test.
 
 `lb`: Vector-valued lower bound of paramater values to search over.
 
@@ -26,7 +26,7 @@ The command stucture is as follows:
 
 `max_eval`: The maximum number of generated points before the algorithm stops.
 
-`func_tol_array_size` reannealing cycles should fall before we declare the algorithm has converged.
+`func_tol`: Tolerance level for convergence. Based on the average of the absolute value of the difference between current minimum costs and minimum costs after prior reannealing cycles.
 
 `func_tol_array_size`: The number of reannealing cycles' minimum costs to look back on, to determine convergence.
 
