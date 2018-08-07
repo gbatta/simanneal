@@ -6,7 +6,8 @@ This file implements simulated annealing withing Julia.
 The command stucture is as follows:
 `simanneal(obj_fn,obj_fn_args::Tuple,lb,ub,c,nn_g_max,nn_a_max,del,max_eval,func_tol,stall_iter_lim_sc=5)`
 
-##Arguments
+## Arguments
+
 `obj_fn`: The name of the program that returns the cost you are trying to minimize.
 
 `obj_fn_arguments`: Tuple of arguments to the objective function. The first argument must be a vector of initial parameters you are going to test.
