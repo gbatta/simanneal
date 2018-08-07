@@ -26,7 +26,11 @@ The command stucture is as follows:
 
 `max_eval`: The maximum number of generated points before the algorithm stops.
 
-`func_tol`: The number below which the difference between the current minimum cost, and prior minimum costs at `n` reannealing cycles should fall before we declare the algorithm has converged.
+`func_tol`: The number below which the difference between the current minimum cost, and prior minimum costs at `func_tol_array_size` reannealing cycles should fall before we declare the algorithm has converged.
+
+`func_tol_array_size`: The number of reannealing cycles' minimum costs to look back on, to determine convergence.
+
+`noisy`: Set equal to 1 (0 otherwise) if you want each iteration to be outputted to a .csv file entitled "simanneal_output.csv". 
 
 `a=(N_cash,c_b,false,actual_moments,raw_weights,moment_number,num_obs,true,true,true,true,true)`
 
