@@ -1,4 +1,4 @@
-function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn_g_max::Int64,nn_a_max::Int64,del::Vector,max_eval::Int64,func_tol::Float64,func_tol_array_size::Int64,noisy::Boolean,stall_iter_lim_sc=5)
+function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn_g_max::Int64,nn_a_max::Int64,del::Vector,max_eval::Int64,func_tol::Float64,func_tol_array_size::Int64,noisy::Boolean,stall_iter_lim_sc=5,rand_init=500990)
   init_cost=obj_fn(obj_fn_args...)[1]
   moment_size=length(obj_fn_args[4])-1
   num_args=length(obj_fn_args)
@@ -29,10 +29,9 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
   s=enumerate(zeros(Float64,sp))
   s_done=Array{Float64}(sp)
   ave_diff=0.0
-  srand(500990)
   p_accept=0
   v=0
-  tt=0
+  tt=rand_init
   if noisy==1
       junk=vcat("vvv","p_accept","nn_eval","nn_g","nn_a","nn_r",fill("wwold",sp),fill("wwnew",sp),fill("wwbest",sp),"cost_old","cost_new","cost_best",fill("s_done",sp),"tee_accept","tee_accept_zero",
       fill("tee_gen",sp),fill("tee_gen_zero",sp),fill("kay_i",sp),"kay_a",fill("func_tol_array",func_tol_array_size))
@@ -51,7 +50,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
 
         while test<lb[L] || test>ub[L]
           tt+=1
-          srand(L*100+L*tt+tt)
+          srand(L*100+L*tt+tt) #Create a different random number, each iteration
           vv=rand()
           q=sign(vv-0.5)*tee_gen[L]*((1+(1/tee_gen[L]))^(abs(2*vv-1))-1)
           test=wwold[L]+q*bounds[L]
@@ -61,14 +60,12 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
 
       end
 
-#      writecsv("testnew.csv",wwnew)
-
       nn_g+=1
 
       cost_new=obj_fn(wwnew,obj_fn_args[2:num_args]...)[1]
 
       p_accept=1/(1+exp((cost_new-cost_old)/tee_accept))
-      srand(650000+nn_g)
+      srand(rand_init+1e10+nn_g)
       vvv=rand()
 
       nn_eval+=1
@@ -76,7 +73,6 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
       if nn_eval>=max_eval
         converge=1
       end
-
 
 
       if vvv<=p_accept
@@ -118,7 +114,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
     end
 
     wwdelta=copy(wwbest)
-     # Have to construct matrix equal to number of moments x number of moments, because the wwwdelta_mat
+     # Have to construct matrix equal to number of parameters x number of parameters, because the wwwdelta_mat
      # function is modified every time it's run
     wwdelta_mat=repmat(wwdelta,1,sp)
 
@@ -148,7 +144,7 @@ function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn
     insert!(func_tol_array,1,cost_best) # add new best cost and push out old best cost , for averaging
     pop!(func_tol_array)
     comp=fill(cost_best,size(func_tol_array))
-    #Compare latest cost_best to cost_bests from previous 2 reannealing cycles
+    #Compare latest cost_best to cost_bests from previous reannealing cycles
     func_tol_ave=abs(mean(func_tol_array-comp))
 
     if (func_tol_ave<=func_tol && nn_r>=stall_iter_lim)
