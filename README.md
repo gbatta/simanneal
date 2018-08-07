@@ -4,7 +4,7 @@ Simulated annealing for Julia
 This file implements simulated annealing withing Julia. 
 
 The command stucture is as follows:
-`simanneal(obj_fn,obj_fn_args::Tuple,lb,ub,c,nn_g_max,nn_a_max,del,max_eval,func_tol,stall_iter_lim_sc=5)`
+`simanneal(obj_fn,obj_fn_args::Tuple,lb,ub,c,nn_g_max,nn_a_max,del,max_eval,func_tol,stall_iter_lim_sc=5,rand_init=500990)`
 
 ## Arguments
 
@@ -31,6 +31,10 @@ The command stucture is as follows:
 `func_tol_array_size`: The number of reannealing cycles' minimum costs to look back on, to determine convergence.
 
 `noisy`: Set equal to 1 (0 otherwise) if you want each iteration to be outputted to a .csv file entitled "simanneal_output.csv". 
+
+`stall_iter_lim` (OPTIONAL): Minimum number of reannealing cycles.
+
+`rand_init` (OPTIONAL): Integer seed value for random number generators.
 
 `a=(N_cash,c_b,false,actual_moments,raw_weights,moment_number,num_obs,true,true,true,true,true)`
 
