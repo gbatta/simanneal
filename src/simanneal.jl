@@ -1,6 +1,6 @@
 function simanneal(obj_fn,obj_fn_args::Tuple,lb::Vector,ub::Vector,c::Float64,nn_g_max::Int64,nn_a_max::Int64,del::Vector,max_eval::Int64,func_tol::Float64,func_tol_array_size::Int64,noisy::Boolean,stall_iter_lim_sc=5,rand_init=500990)
   init_cost=obj_fn(obj_fn_args...)[1]
-  moment_size=length(obj_fn_args[4])-1
+  #moment_size=length(obj_fn_args[4])-1
   num_args=length(obj_fn_args)
   tee_accept_zero=init_cost
   tee_accept=tee_accept_zero
