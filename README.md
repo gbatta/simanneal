@@ -26,7 +26,7 @@ The command stucture is as follows:
 
 `max_eval`: The maximum number of generated points before the algorithm stops.
 
-`func_tol`: The number below which the difference between the current minimum cost, and prior minimum costs at `func_tol_array_size` reannealing cycles should fall before we declare the algorithm has converged.
+`func_tol_array_size` reannealing cycles should fall before we declare the algorithm has converged.
 
 `func_tol_array_size`: The number of reannealing cycles' minimum costs to look back on, to determine convergence.
 
